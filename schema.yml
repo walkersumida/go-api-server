@@ -1,0 +1,156 @@
+openapi: 3.0.2
+servers:
+  - url: /v3
+info:
+  version: 1.0.0
+  title: Sample schema
+paths:
+  /items:
+    post:
+      tags:
+        - item
+      summary: Add a new item
+      description: Add a new item
+      operationId: addItem
+      requestBody:
+        description: Create a new item
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Item"
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+  /items/{id}:
+    get:
+      tags:
+        - item
+      summary: Find a item by id
+      description: Returns a item
+      operationId: getItem
+      parameters:
+        - name: id
+          in: path
+          description: Id of item to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+    post:
+      tags:
+        - item
+      summary: Updates a item
+      description: ""
+      operationId: updateItem
+      parameters:
+        - name: id
+          in: path
+          description: ID of item that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: name
+          in: query
+          description: Name of item that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of item that needs to be updated
+          schema:
+            $ref: "#/components/schemas/ItemStatus"
+      responses:
+        200:
+          description: Successful operation
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+    delete:
+      tags:
+        - item
+      summary: Deletes a item
+      description: ""
+      operationId: deleteItem
+      parameters:
+        - name: id
+          in: path
+          description: Item id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Successful operation
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+components:
+  schemas:
+    error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    ItemStatus:
+      type: string
+      description: Item status
+      enum:
+        - not_ready
+        - ready
+        - doing
+        - done
+    Item:
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: doggie
+        status:
+          $ref: "#/components/schemas/ItemStatus"
+      type: object
+  requestBodies:
+    Item:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Item"
+      description: Item object that needs to be added
