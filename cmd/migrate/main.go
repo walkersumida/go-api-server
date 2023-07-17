@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	rootCmd := &cobra.Command{Use: "db"}
+	rootCmd := &cobra.Command{Use: "migrate"}
 	rootCmd.AddCommand(cmdUp)
 	rootCmd.AddCommand(cmdDown)
 
