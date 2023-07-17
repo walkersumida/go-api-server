@@ -1,4 +1,4 @@
-ogen:
+ogen-gen:
 	go generate ./ogen
 
 ent-new-%:
@@ -18,7 +18,7 @@ migrate-up:
 migrate-down:
 	go run ./cmd/migrate down
 
-migration-create-%: gen-ent
+migration-create-%: ent-gen
 	go run ./cmd/migration create ${@:migration-create-%=%}
 
 db-create:
@@ -26,3 +26,6 @@ db-create:
 
 db-drop:
 	go run ./cmd/db drop
+
+start:
+	go run ./cmd/server
