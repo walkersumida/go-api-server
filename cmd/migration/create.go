@@ -62,4 +62,9 @@ func create(fileName string) {
 	if err != nil {
 		log.Fatalf("failed generating migration file: %v", err)
 	}
+
+	err = db.Drop(dbname)
+	if err != nil {
+		panic(err)
+	}
 }
