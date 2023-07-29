@@ -1,4 +1,4 @@
-package main
+package migration
 
 import (
 	"context"
@@ -15,9 +15,9 @@ import (
 	"github.com/walkersumida/go-api-server/internal/pkg/path"
 )
 
-var cmdCreate = &cobra.Command{
+var CmdMigrationCreate = &cobra.Command{
 	Use:   "create",
-	Short: "Create migration",
+	Short: "Create migrations",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		create(args[0])

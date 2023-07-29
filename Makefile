@@ -18,8 +18,8 @@ db-migrate-up:
 db-migrate-down:
 	go run ./cmd/db migrate down
 
-migration-create-%: ent-gen
-	go run ./cmd/migration create ${@:migration-create-%=%}
+db-migration-create-%: ent-gen
+	go run ./cmd/db migration create ${@:db-migration-create-%=%}
 
 db-create:
 	go run ./cmd/db create

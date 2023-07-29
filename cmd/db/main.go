@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/walkersumida/go-api-server/cmd/db/migrate"
+	"github.com/walkersumida/go-api-server/cmd/db/migration"
 )
 
 func main() {
@@ -15,6 +16,8 @@ func main() {
 	rootCmd.AddCommand(cmdMigrate)
 	cmdMigrate.AddCommand(migrate.CmdMigrateUp)
 	cmdMigrate.AddCommand(migrate.CmdMigrateDown)
+	rootCmd.AddCommand(cmdMigration)
+	cmdMigration.AddCommand(migration.CmdMigrationCreate)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
