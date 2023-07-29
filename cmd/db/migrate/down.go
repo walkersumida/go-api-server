@@ -1,4 +1,4 @@
-package main
+package migrate
 
 import (
 	"log"
@@ -11,15 +11,15 @@ import (
 	"github.com/walkersumida/go-api-server/internal/pkg/path"
 )
 
-var cmdUp = &cobra.Command{
-	Use:   "up",
+var CmdMigrateDown = &cobra.Command{
+	Use:   "down",
 	Short: "",
 	Run: func(cmd *cobra.Command, args []string) {
-		up()
+		down()
 	},
 }
 
-func up() {
+func down() {
 	url := database.BuildDBURL(database.Configs{})
 	m, err := migrate.New(
 		"file://"+path.Migration(),
@@ -27,7 +27,9 @@ func up() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := m.Up(); err != nil {
+	if err := m.Down(); err != nil {
 		log.Fatal(err)
 	}
+
+	println("Database migrated")
 }

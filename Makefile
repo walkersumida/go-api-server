@@ -12,11 +12,11 @@ ent-gen:
 	rm -rf ./tmp
 	go run ./cmd/ent generate
 
-migrate-up:
-	go run ./cmd/migrate up
+db-migrate-up:
+	go run ./cmd/db migrate up
 
-migrate-down:
-	go run ./cmd/migrate down
+db-migrate-down:
+	go run ./cmd/db migrate down
 
 migration-create-%: ent-gen
 	go run ./cmd/migration create ${@:migration-create-%=%}
