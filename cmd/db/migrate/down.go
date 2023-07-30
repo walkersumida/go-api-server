@@ -4,8 +4,6 @@ import (
 	"log"
 
 	"github.com/golang-migrate/migrate/v4"
-	_ "github.com/golang-migrate/migrate/v4/database/postgres"
-	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/spf13/cobra"
 	"github.com/walkersumida/go-api-server/database"
 	"github.com/walkersumida/go-api-server/internal/pkg/path"
