@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -15,6 +14,7 @@ import (
 	"github.com/walkersumida/go-api-server/database"
 	"github.com/walkersumida/go-api-server/ent"
 	"github.com/walkersumida/go-api-server/handler"
+	lg "github.com/walkersumida/go-api-server/internal/pkg/log"
 	"github.com/walkersumida/go-api-server/ogen"
 	"github.com/walkersumida/go-api-server/repository"
 )
@@ -58,6 +58,8 @@ func run() error {
 		WriteTimeout: timeout,
 	}
 
+	log := lg.NewLogger()
+
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 
@@ -66,18 +68,18 @@ func run() error {
 		<-ctx.Done()
 
 		if err := httpServer.Shutdown(context.Background()); err != nil {
-			log.Printf("HTTP server Shutdown: %v", err)
+			log.Errorf("HTTP server Shutdown: %v", err)
 		}
 		close(idleConnsClosed)
 	}()
 
-	log.Println("Server started")
+	log.Info("Server started")
 	if err := httpServer.ListenAndServe(); err != http.ErrServerClosed {
-		log.Printf("HTTP server ListenAndServe: %v", err)
+		log.Errorf("HTTP server ListenAndServe: %v", err)
 	}
 
 	<-idleConnsClosed
-	log.Println("Server stopped")
+	log.Info("Server stopped")
 
 	return nil
 }
