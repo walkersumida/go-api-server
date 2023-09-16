@@ -50,10 +50,14 @@ func run() error {
 		return errors.Wrap(err, "failed to run server")
 	}
 
+	httphandler := setupHTTPHandler(srv, []middleware{
+		middlewareHTTPLog,
+	})
+
 	const timeout = 60 * time.Second
 	httpServer := http.Server{
 		Addr:         ":8080",
-		Handler:      srv,
+		Handler:      httphandler,
 		ReadTimeout:  timeout,
 		WriteTimeout: timeout,
 	}
