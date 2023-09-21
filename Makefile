@@ -5,11 +5,6 @@ ent-new-%:
 	go run -mod=mod entgo.io/ent/cmd/ent new ${@:ent-new-%=%}
 
 ent-gen:
-	mkdir -p ./tmp/ent
-	mv ./ent/schema ./tmp/ent/
-	rm -rf ./ent
-	mv ./tmp/ent ./ent
-	rm -rf ./tmp
 	go run ./cmd/ent generate
 
 db-migrate-up:
